@@ -1,2 +1,11 @@
 # back_up_net_cfg
-via thrift, to backup network devices' configuration.
+本程序实现基于THRIFT的网络设备配置备份的功能，通过thrift clinet向thrift server需要备份的信息，server进行备份，然后将信息打包，以邮件的形式，发送给用户。
+## thrift通信
+1. thrift client将设备IP地址、设备登录所用的用户名、密码、用户邮箱等信息，放入队列中；
+2. thrift server读取队列信息，开始进行备份消息备份。
+## 设备配置备份
+1. 从IP地址list中，读取一个IP地址，判断其IP地址的合法性；
+2. 然后将用户名、密码、IP地址，通过telnet协议进行通信；
+3. 将show run的结果（），保存到服务器本地；
+4. 1-3过程采用多线程方式，提高执行速度；
+5. 将所有备份完成的配置进行压缩打包，以邮件的形式发送给用户邮箱。
