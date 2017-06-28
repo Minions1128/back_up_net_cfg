@@ -49,7 +49,9 @@ class BackupDevInfoHandler(object):
         sum_count = len(self.ip_list)
         for ip in self.ip_list:
             proc_queue.put(ip)
-        for i in range(sum_count/3):
+        proc_t_count = sum_count / 3
+        proc_t_count = proc_t_count if proc_t_count <= 100 else 100
+        for i in range(proc_t_count):
             self.proc_count += 1
             t = threading.Thread(target=self.get_one_dev_config)
             t.start()
